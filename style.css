@@ -1,0 +1,45 @@
+body {
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #777;
+  padding: 8px;
+}
+
+#screen {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  min-height: 32px;
+  min-width: 256px;
+  padding: 8px;
+  border: 1px solid #777;
+}
+
+#keypad {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.keypad-row {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+}
+
+.keypad-row > div {
+  border: 1px solid #777;
+  padding: 4px;
+  text-align: center;
+  flex: 1;
+}
