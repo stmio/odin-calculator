@@ -8,36 +8,37 @@
     <title>Calculator</title>
   </head>
   <body>
+    <script src="./script.js" defer></script>
     <div id="calculator">
       <div id="screen">3.14159265359</div>
       <div id="keypad">
         <div class="keypad-row">
-          <div>CLEAR</div>
-          <div>DELETE</div>
+          <button>CLEAR</button>
+          <button>DELETE</button>
         </div>
         <div class="keypad-row">
-          <div>7</div>
-          <div>8</div>
-          <div>9</div>
-          <div>&divide;</div>
+          <button class="operand" id="7">7</button>
+          <button class="operand" id="8">8</button>
+          <button class="operand" id="9">9</button>
+          <button class="operator" id="divide">&divide;</button>
         </div>
         <div class="keypad-row">
-          <div>4</div>
-          <div>5</div>
-          <div>6</div>
-          <div>&times;</div>
+          <button class="operand" id="4">4</button>
+          <button class="operand" id="5">5</button>
+          <button class="operand" id="6">6</button>
+          <button class="operator" id="multiply">&times;</button>
         </div>
         <div class="keypad-row">
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>&minus;</div>
+          <button class="operand" id="1">1</button>
+          <button class="operand" id="2">2</button>
+          <button class="operand" id="3">3</button>
+          <button class="operator" id="subtract">&minus;</button>
         </div>
         <div class="keypad-row">
-          <div>0</div>
-          <div>.</div>
-          <div>&hookleftarrow;</div>
-          <div>&plus;</div>
+          <button class="operand" id="0">0</button>
+          <button>.</button>
+          <button id="equals">&equals;</button>
+          <button class="operator" id="add">&plus;</button>
         </div>
       </div>
     </div>
