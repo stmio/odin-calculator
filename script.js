@@ -1,31 +1,62 @@
 let displayValue = "";
-let firstOperator = null;
-let secondOperator = null;
+let operator = null;
 let firstOperand = null;
 let secondOperand = null;
-let result = null;
+let result = 0;
 
 function operate(operator, a, b) {
   if (operator === "add") return a + b;
   if (operator === "subtract") return a - b;
   if (operator === "multiply") return a * b;
-  if (operator === "divide") return a / b;
+  if (operator === "divide") {
+    if (b === 0) return "ERROR";
+    return a / b;
+  }
 }
 
 function buttonPressed(button) {
   if (button.classList.contains("operand")) {
-    if (typeof displayValue !== "string") displayValue = "";
-    displayValue = displayValue.concat(button.id);
+    if (typeof displayValue !== "string" || displayValue === "ERROR") {
+      displayValue = "";
+    }
+    if (button.id === "decimal" && displayValue.includes(".")) return;
+    displayValue = displayValue.concat(button.textContent);
   } else if (button.classList.contains("operator")) {
-    firstOperand = Number(displayValue);
-    displayValue = "";
-    firstOperator = button.id;
+    storeOperand(displayValue);
+    inputOperator(button.id);
   } else if (button.id === "equals") {
-    secondOperand = Number(displayValue);
-    result = operate(firstOperator, firstOperand, secondOperand);
+    if (!firstOperand) storeOperand(result);
+    if (!secondOperand) storeOperand(displayValue);
+    result = operate(operator, firstOperand, secondOperand);
     displayValue = result;
+    firstOperand = null;
+    secondOperand = null;
+    operator = null;
+  } else if (button.id === "delete") {
+    displayValue = displayValue.slice(0, -1);
+  } else if (button.id === "clear") {
+    window.location.reload();
   }
   updateDisplay();
+}
+
+function inputOperator(op) {
+  if (!operator) {
+    operator = op;
+    displayValue = "";
+  } else {
+    if (!secondOperand) storeOperand(displayValue);
+    result = operate(operator, firstOperand, secondOperand);
+    operator = op;
+    displayValue = result;
+    firstOperand = result;
+    secondOperand = null;
+  }
+}
+
+function storeOperand(operand) {
+  if (!firstOperand) firstOperand = Number(operand);
+  else secondOperand = Number(operand);
 }
 
 function updateDisplay() {

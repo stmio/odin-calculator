@@ -10,11 +10,11 @@
   <body>
     <script src="./script.js" defer></script>
     <div id="calculator">
-      <div id="screen">3.14159265359</div>
+      <div id="screen"></div>
       <div id="keypad">
         <div class="keypad-row">
-          <button>CLEAR</button>
-          <button>DELETE</button>
+          <button id="clear">CLEAR</button>
+          <button id="delete">DELETE</button>
         </div>
         <div class="keypad-row">
           <button class="operand" id="7">7</button>
@@ -36,7 +36,7 @@
         </div>
         <div class="keypad-row">
           <button class="operand" id="0">0</button>
-          <button>.</button>
+          <button class="operand" id="decimal">.</button>
           <button id="equals">&equals;</button>
           <button class="operator" id="add">&plus;</button>
         </div>
