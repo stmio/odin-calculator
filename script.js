@@ -41,7 +41,7 @@ function buttonPressed(button) {
     firstOperand = null;
     secondOperand = null;
     operator = null;
-  } else if (button.id === "delete") {
+  } else if (button.id === "delete" && typeof displayValue === "string") {
     displayValue = displayValue.slice(0, -1);
   } else if (button.id === "clear") {
     window.location.reload();
@@ -73,7 +73,52 @@ function updateDisplay() {
   screen.textContent = displayValue;
 }
 
+function handleKeyboardInput(event) {
+  // Numerical key presses (0-9)
+  if (event.key >= 0 && event.key <= 9) {
+    const keypadButton = document.getElementById(event.key);
+    if (keypadButton) buttonPressed(keypadButton);
+  }
+
+  // Decimal point key presses (.)
+  if (event.key === ".") {
+    buttonPressed(document.getElementById("decimal"));
+  }
+
+  // Operator key presses (+ - * /)
+  if (["+", "-", "*", "/"].includes(event.key)) {
+    event.preventDefault();
+    let operation;
+    if (event.key === "+") operation = "add";
+    if (event.key === "-") operation = "subtract";
+    if (event.key === "*") operation = "multiply";
+    if (event.key === "/") operation = "divide";
+
+    buttonPressed(document.getElementById(operation));
+  }
+
+  // Equals key presses (ENTER =)
+  if (event.key === "Enter" || event.key === "=") {
+    buttonPressed(document.getElementById("equals"));
+  }
+
+  // Delete key presses (DELETE BACKSPACE)
+  if (event.key === "Delete" || event.key === "Backspace") {
+    buttonPressed(document.getElementById("delete"));
+  }
+
+  // Clear key presses (ESCAPE c)
+  if (event.key === "Escape" || event.key === "c") {
+    event.preventDefault();
+    buttonPressed(document.getElementById("clear"));
+  }
+}
+
+// Listen for calculator keypad button presses
 const keypadButtons = document.querySelectorAll("button");
 keypadButtons.forEach((button) =>
   button.addEventListener("click", () => buttonPressed(button))
 );
+
+// Listen for keyboard key presses
+window.addEventListener("keydown", handleKeyboardInput);
