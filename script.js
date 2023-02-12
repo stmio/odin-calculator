@@ -5,13 +5,22 @@ let secondOperand = null;
 let result = 0;
 
 function operate(operator, a, b) {
-  if (operator === "add") return a + b;
-  if (operator === "subtract") return a - b;
-  if (operator === "multiply") return a * b;
+  let n;
+  if (!operator) return;
+
+  if (operator === "add") n = a + b;
+  if (operator === "subtract") n = a - b;
+  if (operator === "multiply") n = a * b;
   if (operator === "divide") {
     if (b === 0) return "ERROR";
-    return a / b;
+    n = a / b;
   }
+
+  return round(n, 15);
+}
+
+function round(num, decimals) {
+  return Number(Math.round(num + "e" + decimals) + "e-" + decimals);
 }
 
 function buttonPressed(button) {
