@@ -1,61 +1,92 @@
+const DEFAULT_DISPLAY_VALUE = 0;
 let displayValue = "";
+
 let operator = null;
 let firstOperand = null;
 let secondOperand = null;
+
 let result = 0;
 
+// Calculate operation and return result
 function operate(operator, a, b) {
   let n;
+  // Skip if operator is null
   if (!operator) return;
 
   if (operator === "add") n = a + b;
   if (operator === "subtract") n = a - b;
   if (operator === "multiply") n = a * b;
   if (operator === "divide") {
+    // Stop division by zero
     if (b === 0) return "ERROR";
     n = a / b;
   }
 
+  // If result has long decimal, round to max 15 decimal places
   return round(n, 15);
 }
 
+// Round number to a specified amount of decimal places
+// See https://www.jacklmoore.com/notes/rounding-in-javascript/
 function round(num, decimals) {
   return Number(Math.round(num + "e" + decimals) + "e-" + decimals);
 }
 
-function buttonPressed(button) {
+function handleButtonPress(button) {
   if (button.classList.contains("operand")) {
+    // If display contains a previous result or an error,
+    // reset display before new number is entered.
     if (typeof displayValue !== "string" || displayValue === "ERROR") {
       displayValue = "";
     }
+
+    // Do not allow more than one decimal point in the display
     if (button.id === "decimal" && displayValue.includes(".")) return;
+
+    // Add inputted digit to end of display
     displayValue = displayValue.concat(button.textContent);
   } else if (button.classList.contains("operator")) {
+    // Store value currently on display
     storeOperand(displayValue);
+
+    // Handle operator logic
     inputOperator(button.id);
   } else if (button.id === "equals") {
-    if (!firstOperand) storeOperand(result);
+    // If no operator, skip so display is not cleared
+    if (!operator) return;
+
+    // Set second number to the display value
     if (!secondOperand) storeOperand(displayValue);
+
+    // Calculate result
     result = operate(operator, firstOperand, secondOperand);
     displayValue = result;
-    firstOperand = null;
-    secondOperand = null;
-    operator = null;
+
+    // Reset values for next calculation
+    clearMemory();
   } else if (button.id === "delete" && typeof displayValue === "string") {
+    // Delete last digit from display
     displayValue = displayValue.slice(0, -1);
   } else if (button.id === "clear") {
+    // Reload the page to reset all variables
     window.location.reload();
   }
+
+  // After calculator logic, update display
   updateDisplay();
 }
 
+// Handles operator logic. Allows multiple operators to be chained
 function inputOperator(op) {
+  // First operator after result
   if (!operator) {
     operator = op;
     displayValue = "";
   } else {
-    if (!secondOperand) storeOperand(displayValue);
+    // For chained operations, calculate the previous result...
     result = operate(operator, firstOperand, secondOperand);
+
+    // ...and set the new values for the next calculation
     operator = op;
     displayValue = result;
     firstOperand = result;
@@ -63,9 +94,16 @@ function inputOperator(op) {
   }
 }
 
+// Stores the entered number into the appropriate variable
 function storeOperand(operand) {
   if (!firstOperand) firstOperand = Number(operand);
   else secondOperand = Number(operand);
+}
+
+function clearMemory() {
+  firstOperand = null;
+  secondOperand = null;
+  operator = null;
 }
 
 function updateDisplay() {
@@ -77,12 +115,12 @@ function handleKeyboardInput(event) {
   // Numerical key presses (0-9)
   if (event.key >= 0 && event.key <= 9) {
     const keypadButton = document.getElementById(event.key);
-    if (keypadButton) buttonPressed(keypadButton);
+    if (keypadButton) handleButtonPress(keypadButton);
   }
 
   // Decimal point key presses (.)
   if (event.key === ".") {
-    buttonPressed(document.getElementById("decimal"));
+    handleButtonPress(document.getElementById("decimal"));
   }
 
   // Operator key presses (+ - * /)
@@ -94,31 +132,35 @@ function handleKeyboardInput(event) {
     if (event.key === "*") operation = "multiply";
     if (event.key === "/") operation = "divide";
 
-    buttonPressed(document.getElementById(operation));
+    handleButtonPress(document.getElementById(operation));
   }
 
   // Equals key presses (ENTER =)
   if (event.key === "Enter" || event.key === "=") {
-    buttonPressed(document.getElementById("equals"));
+    handleButtonPress(document.getElementById("equals"));
   }
 
   // Delete key presses (DELETE BACKSPACE)
   if (event.key === "Delete" || event.key === "Backspace") {
-    buttonPressed(document.getElementById("delete"));
+    handleButtonPress(document.getElementById("delete"));
   }
 
   // Clear key presses (ESCAPE c)
   if (event.key === "Escape" || event.key === "c") {
     event.preventDefault();
-    buttonPressed(document.getElementById("clear"));
+    handleButtonPress(document.getElementById("clear"));
   }
 }
 
 // Listen for calculator keypad button presses
 const keypadButtons = document.querySelectorAll("button");
 keypadButtons.forEach((button) =>
-  button.addEventListener("click", () => buttonPressed(button))
+  button.addEventListener("click", () => handleButtonPress(button))
 );
 
 // Listen for keyboard key presses
 window.addEventListener("keydown", handleKeyboardInput);
+
+// Set calculator display to default value
+displayValue = DEFAULT_DISPLAY_VALUE;
+updateDisplay();
