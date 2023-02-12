@@ -64,6 +64,8 @@ function handleButtonPress(button) {
 
     // Reset values for next calculation
     clearMemory();
+    // Removes active class from operator buttons
+    displayCurrentOperator();
   } else if (button.id === "delete" && typeof displayValue === "string") {
     // Delete last digit from display
     displayValue = displayValue.slice(0, -1);
@@ -92,6 +94,9 @@ function inputOperator(op) {
     firstOperand = result;
     secondOperand = null;
   }
+
+  // Highlight current operator button
+  displayCurrentOperator();
 }
 
 // Stores the entered number into the appropriate variable
@@ -109,6 +114,20 @@ function clearMemory() {
 function updateDisplay() {
   const screen = document.querySelector("#screen");
   screen.textContent = displayValue;
+}
+
+// Highlights which calculator operation is active
+function displayCurrentOperator() {
+  // Remove active class from all operator buttons
+  const operatorButtons = document.querySelectorAll(".operator");
+  operatorButtons.forEach((button) => button.classList.remove("active"));
+
+  // If no current operator, stop after removing the class from all buttons
+  if (!operator) return;
+
+  // Add active class to current operator button
+  const currentOperatorButton = document.getElementById(operator);
+  currentOperatorButton.classList.add("active");
 }
 
 function handleKeyboardInput(event) {

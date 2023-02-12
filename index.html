@@ -9,37 +9,51 @@
   </head>
   <body>
     <script src="./script.js" defer></script>
-    <div id="calculator">
-      <div id="screen"></div>
-      <div id="keypad">
-        <div class="keypad-row">
-          <button id="clear">CLEAR</button>
-          <button id="delete">DELETE</button>
+    <div id="main">
+      <div id="calculator">
+        <div id="screen"></div>
+        <div id="keypad">
+          <div class="keypad-row">
+            <button id="clear">CLEAR</button>
+            <button id="delete">DELETE</button>
+          </div>
+          <div class="keypad-row">
+            <button class="operand" id="7">7</button>
+            <button class="operand" id="8">8</button>
+            <button class="operand" id="9">9</button>
+            <button class="operator" id="divide">&divide;</button>
+          </div>
+          <div class="keypad-row">
+            <button class="operand" id="4">4</button>
+            <button class="operand" id="5">5</button>
+            <button class="operand" id="6">6</button>
+            <button class="operator" id="multiply">&times;</button>
+          </div>
+          <div class="keypad-row">
+            <button class="operand" id="1">1</button>
+            <button class="operand" id="2">2</button>
+            <button class="operand" id="3">3</button>
+            <button class="operator" id="subtract">&minus;</button>
+          </div>
+          <div class="keypad-row">
+            <button class="operand" id="0">0</button>
+            <button class="operand" id="decimal">.</button>
+            <button id="equals">&equals;</button>
+            <button class="operator" id="add">&plus;</button>
+          </div>
         </div>
-        <div class="keypad-row">
-          <button class="operand" id="7">7</button>
-          <button class="operand" id="8">8</button>
-          <button class="operand" id="9">9</button>
-          <button class="operator" id="divide">&divide;</button>
-        </div>
-        <div class="keypad-row">
-          <button class="operand" id="4">4</button>
-          <button class="operand" id="5">5</button>
-          <button class="operand" id="6">6</button>
-          <button class="operator" id="multiply">&times;</button>
-        </div>
-        <div class="keypad-row">
-          <button class="operand" id="1">1</button>
-          <button class="operand" id="2">2</button>
-          <button class="operand" id="3">3</button>
-          <button class="operator" id="subtract">&minus;</button>
-        </div>
-        <div class="keypad-row">
-          <button class="operand" id="0">0</button>
-          <button class="operand" id="decimal">.</button>
-          <button id="equals">&equals;</button>
-          <button class="operator" id="add">&plus;</button>
-        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div id="report-bugs">
+        Please report any bugs on the
+        <a href="https://github.com/stmio/odin-calculator/issues">
+          GitHub repository
+        </a>
+      </div>
+      <div>
+        Built by <a href="https://stmio.github.io/">Sam Turner (stmio)</a> in
+        2023 for <a href="https://www.theodinproject.com/">The Odin Project</a>
       </div>
     </div>
   </body>
